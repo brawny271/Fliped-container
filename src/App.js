@@ -1,14 +1,10 @@
-
-
-// container is getting flipped but calander is rendering reverse side.
-
 import React, { useState } from "react";
 import Calander from "./Calander";
 import Events from "./Events";
 import EventShow from "./EventShow";
 import { FaCalendar } from "react-icons/fa";
 import { FaList } from "react-icons/fa";
-import './App.css';
+import "./App.css";
 
 const App = () => {
   const [events, setEvents] = useState([
@@ -43,6 +39,7 @@ const App = () => {
     {
       date: "2023-11-18",
       title: "Drinks Celebration",
+      time: "4:00 PM to 5:00 PM",
       Department: "Sales & Marketing",
       Location: "Pune",
     },
@@ -57,16 +54,25 @@ const App = () => {
 
   return (
     <div className="flex w-full h-screen justify-center items-center">
-      <div className={`container w-[40%] h-[70%] border rounded shadow-inner relative ${showEvent ? "flip" : ""}`}>
-        <div className="card">
-          {showEvent ? (
-            <Calander events={events} />
-          ) : (
-            <EventShow events={events} />
-          )}
+      <div
+        className={`container w-[40%] h-[70%] border rounded shadow-inner relative ${
+          showEvent ? "flip" : ""
+        }`}
+      >
+        <div className="content">
+          <div
+            className="card"
+            style={{ transform: showEvent ? "rotateY(-180deg)" : "none" }}
+          >
+            {showEvent ? (
+              <Calander events={events} />
+            ) : (
+              <EventShow events={events} showEvent={showEvent} />
+            )}
+          </div>
         </div>
         <Events events={events} hoveredDate={hoveredDate} />
-        <div className="absolute top-4 right-4 flex flex-row space-x-2">
+        {/* <div className="absolute top-4 right-4 flex flex-row space-x-2">
           <button
             className="transition flex justify-center blue py-2 w-10 bg-white hover:white hover:bg-blue-400 focus:bg-blue-900 focus:text-white border rounded-l"
             onClick={handleComponent}
@@ -79,7 +85,22 @@ const App = () => {
           >
             <FaList size="1.5em" />
           </button>
-        </div>
+        </div> */}
+      </div>
+
+      <div className="absolute top-[19%] right-[32%] flex flex-row space-x-2">
+        <button
+          className="transition flex justify-center blue py-2 w-10 bg-white hover:white hover:bg-blue-400 focus:bg-blue-900 focus:text-white border rounded-l"
+          onClick={handleComponent}
+        >
+          <FaCalendar size="1.5em" />
+        </button>
+        <button
+          className="transition flex justify-center black py-2 w-10 rounded-r hover:white bg-white hover:bg-blue-400 focus:bg-blue-900 focus:text-white border"
+          onClick={handleComponent}
+        >
+          <FaList size="1.5em" />
+        </button>
       </div>
     </div>
   );
